@@ -67,9 +67,10 @@ public class JournalArticleCreator7010 {
 		// Control Panel / Configuration / System Settings / Documents and Media
 		// / Maximum File Size
 
-		JFileChooser chooser = new JFileChooser("Please select the image you would like to upload");
+		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
 		chooser.setFileFilter(filter);
+		chooser.setDialogTitle("Please select the image you would like to upload");
 		int returnVal = chooser.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			imageFile = chooser.getSelectedFile().getAbsoluteFile();
