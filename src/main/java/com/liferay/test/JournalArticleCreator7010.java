@@ -87,6 +87,9 @@ public class JournalArticleCreator7010 {
 				",\"addGuestPermissions\":false" + ", \"scopeGroupId\":\"0\"}";
 
 		String actionUrl = "http://localhost:8080/api/jsonws/journal.journalarticle/add-article";
+		
+		// As a display date, we use yesterday: otherwise the article will be created with a
+		// "scheduled" state, but we want the article to appear on the Portal immediately
 		Calendar yesterday = Calendar.getInstance();
 		yesterday.add(Calendar.DAY_OF_YEAR, -1);
 		Calendar nextWeek = Calendar.getInstance();
@@ -96,6 +99,9 @@ public class JournalArticleCreator7010 {
 		String timenow = displayDateHour + ":" + displayDateMinute;
 		String titleMap = "{\"en_US\":\"Test Article created on " + timenow + "\"}";
 		String descriptionMap = "{\"en_US\":\"Description SG2\"}";
+		
+		// Important note: the content variable must contain at least a root tag element,
+		// otherwise the article will not be created
 		String content = "<?xml version=\"1.0\"?><root></root>";
 
 		folderId = 0;
