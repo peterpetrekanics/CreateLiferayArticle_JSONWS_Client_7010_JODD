@@ -3,6 +3,7 @@
  */
 package com.liferay.test;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.Calendar;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jodd.http.HttpProgressListener;
@@ -54,6 +56,12 @@ public class JournalArticleCreator7010 {
 		// exists on the Portal. It may be a good idea to create a method that checks
 		// if the file already exists and deletes it, if it does.
 
+//		username= JOptionPane.showInputDialog("Please enter the username:");
+		username="test@liferay.com";
+		
+//		password= JOptionPane.showInputDialog("Please enter the password:");
+		password="test";
+		
 		groupIdAsString = JOptionPane.showInputDialog("Please enter the groupId:");
 		groupId = Integer.parseInt(groupIdAsString);
 
@@ -102,7 +110,8 @@ public class JournalArticleCreator7010 {
 		
 		// Important note: the content variable must contain at least a root tag element,
 		// otherwise the article will not be created
-		String content = "<?xml version=\"1.0\"?><root></root>";
+//		String content = "<?xml version=\"1.0\"?><root></root>";
+		String content = "<?xml version=\"1.0\"?><root available-locales=\"fr_FR,en_US\" default-locale=\"en_US\"><dynamic-element name=\"text\" type=\"text\" index-type=\"keyword\" instance-id=\"fmcr\"><dynamic-content language-id=\"fr_FR\"><![CDATA[Bonjour, monde!]]></dynamic-content><dynamic-content language-id=\"en_US\"><![CDATA[Hello, world!]]></dynamic-content></dynamic-element></root>";
 
 		folderId = 0;
 		classNameId = 0;
@@ -117,8 +126,8 @@ public class JournalArticleCreator7010 {
 		smallImageURL = "";
 		smallFile = "";
 		articleURL = "";
-		String username = "test@liferay.com";
-		String password = "test";
+//		String username = "test@liferay.com";
+//		String password = "test";
 
 		HttpResponse httpResponse = HttpRequest.post(actionUrl).multipart(true) // this is the key, without this line
 																				// only the small files can be uploaded
