@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -20,17 +22,24 @@ import jodd.http.HttpResponse;
 import jodd.io.FileUtil;
 
 public class JournalArticleCreator7010 {
-	static File imageFile;
+	static File imageFile1;
+	static File imageFile2;
+	static File imageFile3;
+	static File imageFile4;
 	static HttpRequest httpRequest;
 	static int requestSize;
 	static String groupIdAsString;
-	static String ddmStructureKeyAsString;
-	static String ddmTemplateKeyAsString;
 	static long groupId;
-	static long ddmStructureKey;
-	static long ddmTemplateKey;
-	static String imageFileNameString;
-	static String imageFilePathString;
+	static String ddmStructureKey;
+	static String ddmTemplateKey;
+	static String imageFileNameString1;
+	static String imageFileNameString2;
+	static String imageFileNameString3;
+	static String imageFileNameString4;
+	static String imageFilePathString1;
+	static String imageFilePathString2;
+	static String imageFilePathString3;
+	static String imageFilePathString4;
 	static long folderId;
 	static long classNameId;
 	static long classPK;
@@ -52,9 +61,13 @@ public class JournalArticleCreator7010 {
 	}
 
 	private static void createJournalArticleWithImage() throws IOException {
-		// TODO: Currently, this app is not checking whether the image file already
-		// exists on the Portal. It may be a good idea to create a method that checks
-		// if the file already exists and deletes it, if it does.
+		// Working on 24 Aug 2019
+		// Note: there were no DuplicateFileEntryException errors while testing
+		// Note2: In the Portal, the file size is checked here:
+		// Control Panel / Configuration / System Settings / Documents and Media
+		// / Maximum File Size
+		// Note3: The correct syntax for the images Map:
+//		{"filename1.ext":[-119, 80, ... ],"filename2.ext":[-119, 80, ... ]}
 
 //		username= JOptionPane.showInputDialog("Please enter the username:");
 		username="test@liferay.com";
@@ -62,34 +75,57 @@ public class JournalArticleCreator7010 {
 //		password= JOptionPane.showInputDialog("Please enter the password:");
 		password="test";
 		
-		groupIdAsString = JOptionPane.showInputDialog("Please enter the groupId:");
+//		groupIdAsString = JOptionPane.showInputDialog("Please enter the groupId:");
+		groupIdAsString = "20142";
 		groupId = Integer.parseInt(groupIdAsString);
 
-		ddmStructureKeyAsString = JOptionPane.showInputDialog("Please enter the ddmStructureKey:");
-		ddmStructureKey = Integer.parseInt(ddmStructureKeyAsString);
+//		ddmStructureKey = JOptionPane.showInputDialog("Please enter the ddmStructureKey:");
+		ddmStructureKey = "36680";
 
-		ddmTemplateKeyAsString = JOptionPane.showInputDialog("Please enter the ddmTemplateKey:");
-		ddmTemplateKey = Integer.parseInt(ddmTemplateKeyAsString);
+//		ddmTemplateKey = JOptionPane.showInputDialog("Please enter the ddmTemplateKey:");
+		ddmTemplateKey = "36684";
 
-		// Note: In the Portal, the file size is checked here:
-		// Control Panel / Configuration / System Settings / Documents and Media
-		// / Maximum File Size
+//		JFileChooser chooser = new JFileChooser();
+//		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+//		chooser.setFileFilter(filter);
+//		chooser.setDialogTitle("Please select the image you would like to upload");
+//		int returnVal = chooser.showOpenDialog(null);
+//		if (returnVal == JFileChooser.APPROVE_OPTION) {
+//			imageFile1 = chooser.getSelectedFile().getAbsoluteFile();
+//			System.out.println("You chose to upload this file: " + imageFile1.getName());
+//		}
+		
+		imageFilePathString1="/home/peterpetrekanics/Pictures/test_pictures/1.png";
+		imageFilePathString2="/home/peterpetrekanics/Pictures/test_pictures/2.png";
+		imageFilePathString3="/home/peterpetrekanics/Pictures/test_pictures/3.png";
+		imageFilePathString4="/home/peterpetrekanics/Pictures/test_pictures/4.png";
+		
+		imageFile1 = new File(imageFilePathString1);
+		imageFile2 = new File(imageFilePathString2);
+		imageFile3 = new File(imageFilePathString3);
+		imageFile4 = new File(imageFilePathString4);
 
-		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
-		chooser.setFileFilter(filter);
-		chooser.setDialogTitle("Please select the image you would like to upload");
-		int returnVal = chooser.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			imageFile = chooser.getSelectedFile().getAbsoluteFile();
-			System.out.println("You chose to upload this file: " + imageFilePathString);
-		}
+		imageFileNameString1 = imageFile1.getName();
+		byte[] bytes1 = FileUtil.readBytes(imageFile1);
+		imageFileNameString2 = imageFile2.getName();
+		byte[] bytes2 = FileUtil.readBytes(imageFile2);
+		imageFileNameString2 = imageFile2.getName();
+		byte[] bytes3 = FileUtil.readBytes(imageFile3);
+		imageFileNameString3 = imageFile3.getName();
+		byte[] bytes4 = FileUtil.readBytes(imageFile4);
+		imageFileNameString4 = imageFile4.getName();
+		
+		String bytesString1 = Arrays.toString(bytes1);
+		String bytesString2 = Arrays.toString(bytes2);
+		String bytesString3 = Arrays.toString(bytes3);
+		String bytesString4 = Arrays.toString(bytes4);
+//		String images = "{\"" + imageFileNameString1 + "\":" + bytesString1 + "}";
 
-		imageFileNameString = imageFile.getName();
-		byte[] bytes = FileUtil.readBytes(imageFile);
-
-		String bytesString = Arrays.toString(bytes);
-		String images = "{\"" + imageFileNameString + "\":" + bytesString + "}";
+		String images1 = "\"" + imageFileNameString1 + "\":" + bytesString1 + "";
+		String images2 = "\"" + imageFileNameString2 + "\":" + bytesString2 + "";
+		String images3 = "\"" + imageFileNameString3 + "\":" + bytesString3 + "";
+		String images4 = "\"" + imageFileNameString4 + "\":" + bytesString4 + "";
+		String imagesString = "{" + images1 + "," + images2  + "," + images3  + "," + images4 + "}";
 
 		String serviceContext = "{\"addGroupPermissions\":false" + 
 				",\"addGuestPermissions\":false" + ", \"scopeGroupId\":\"0\"}";
@@ -107,11 +143,10 @@ public class JournalArticleCreator7010 {
 		String timenow = displayDateHour + ":" + displayDateMinute;
 		String titleMap = "{\"en_US\":\"Test Article created on " + timenow + "\"}";
 		String descriptionMap = "{\"en_US\":\"Description SG2\"}";
-		
-		// Important note: the content variable must contain at least a root tag element,
-		// otherwise the article will not be created
+
+		// Important note: the content variable must match the structure's setup
 //		String content = "<?xml version=\"1.0\"?><root></root>";
-		String content = "<?xml version=\"1.0\"?><root available-locales=\"fr_FR,en_US\" default-locale=\"en_US\"><dynamic-element name=\"text\" type=\"text\" index-type=\"keyword\" instance-id=\"fmcr\"><dynamic-content language-id=\"fr_FR\"><![CDATA[Bonjour, monde!]]></dynamic-content><dynamic-content language-id=\"en_US\"><![CDATA[Hello, world!]]></dynamic-content></dynamic-element></root>";
+		String content = "<?xml version=\"1.0\"?><root available-locales=\"fr_FR,en_US\" default-locale=\"en_US\"><dynamic-element name=\"text\" type=\"text\" index-type=\"keyword\" instance-id=\"qmcr\"><dynamic-content language-id=\"fr_FR\"><![CDATA[Bonjour, monde!]]></dynamic-content><dynamic-content language-id=\"en_US\"><![CDATA[Hello, world!]]></dynamic-content></dynamic-element></root>";
 
 		folderId = 0;
 		classNameId = 0;
@@ -126,8 +161,6 @@ public class JournalArticleCreator7010 {
 		smallImageURL = "";
 		smallFile = "";
 		articleURL = "";
-//		String username = "test@liferay.com";
-//		String password = "test";
 
 		HttpResponse httpResponse = HttpRequest.post(actionUrl).multipart(true) // this is the key, without this line
 																				// only the small files can be uploaded
@@ -164,7 +197,7 @@ public class JournalArticleCreator7010 {
 						"smallImage", smallImage,
 						"smallImageURL", smallImageURL,
 						"smallFile", smallFile,
-						"images", images,
+						"images", imagesString,
 						"articleURL", articleURL,
 						"serviceContext", serviceContext
 
@@ -177,8 +210,9 @@ public class JournalArticleCreator7010 {
 					}
 				}).basicAuthentication(username, password).send();
 
-		JOptionPane.showMessageDialog(null, httpResponse.toString(), "Response from the Portal: ",
-				JOptionPane.INFORMATION_MESSAGE);
-
+		// Note3: during testing the below JOptionPane froze, so we wont be using it:
+//		JOptionPane.showMessageDialog(null, httpResponse.toString(), "Response from the Portal: ",
+//				JOptionPane.INFORMATION_MESSAGE);
+		System.out.println("Response from the Portal: " + httpResponse.toString());
 	}
 }
