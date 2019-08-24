@@ -10,6 +10,7 @@ dl.file.max.size
 com.liferay.portal.upload.UploadServletRequestImpl.max.size
 com.liferay.portal.upload.LiferayFileItem.threshold.size
 You need to set these properties to a higher value than your image file size.
+Note: the App now support multiple images as well.
 3. Start your portal
 4. Once the portal is running, check your portal database for the following values and note them down:
 SELECT groupId FROM Your_DB_Name.Group_  where groupKey = 'Guest';
@@ -26,11 +27,11 @@ the template should only contain this line:
 7. Place an Asset Publisher portlet to your Welcome page:
 within Asset Publisher, click on: Configuration / Display Settings / Display Template:
 instead of Abstracts choose: Full Content and click Save.
-8. Start the App
-It will ask for the values that you noted down in step4:
-groupId, templateKey, structureKey.
-You don't need to modify the source code and re-compile the app.
-The app will display the artice creation results in a window - press enter to dismiss the results window.
+8. Compile and start the App
+Make sure you have the correct values before starting:
+groupId, templateKey, structureKey, content.
+The content has to be created based on the Portal database (JournalArticle table's "content" column)
+
 9. Visit your Welcome page to see whether the new article appears within Asset Publisher.
 
 Behavior without the fix of LPS-98290 installed:
